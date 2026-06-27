@@ -8,10 +8,15 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
   body {
     font-family: 'Courier New', monospace;
     background: #ffffff;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,48 +32,50 @@
     text-transform: uppercase;
   }
 
-  /* ── STICKER FULL 58mm x 30mm ── */
+  /* ── STICKER NO SIZE FIXED ── */
   .sticker {
-    width: 58mm;
-    height: 30mm;
+    width: 100%;
+    max-width: 100%;
     background: #fff;
     border: 1px dashed #999;
-    padding: 1mm 1.5mm;
+    padding: 10px 15px;
     font-family: 'Courier New', monospace;
     color: #000;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    min-height: 200px;
   }
 
   /* ── ROW 1: Shop Header ── */
   .header {
-    border-bottom: 0.6px solid #000;
-    padding-bottom: 0.4mm;
-    margin-bottom: 0.4mm;
+    border-bottom: 2px solid #000;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
   }
 
   .shop-name {
-    font-size: 7pt;
+    font-size: 18px;
     font-weight: bold;
     line-height: 1;
   }
 
   .shop-phone {
-    font-size: 4.5pt;
+    font-size: 12px;
     color: #000;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
   }
 
   /* ── ROW 2: Job Number (Black bar) ── */
   .job-bar {
     background: #000;
     color: #fff;
-    font-size: 7pt;
+    font-size: 16px;
     font-weight: bold;
-    padding: 0.3mm 0.8mm;
-    letter-spacing: 0.6px;
-    margin-bottom: 0.4mm;
+    padding: 6px 12px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,17 +84,17 @@
   /* ── ROW 3: Main content (Details + QR) ── */
   .main-content {
     display: flex;
-    gap: 0.8mm;
+    gap: 12px;
     flex: 1;
-    margin-bottom: 0.4mm;
-    align-items: center;
+    margin-bottom: 8px;
+    align-items: flex-start;
   }
 
   .details {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.35mm;
+    gap: 4px;
   }
 
   .detail-item {
@@ -97,17 +104,19 @@
   }
 
   .dl {
-    font-size: 4.2pt;
+    font-size: 9px;
     color: #000;
     text-transform: uppercase;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
   }
 
   .dv {
-    font-size: 5.5pt;
+    font-size: 12px;
     font-weight: bold;
     color: #000;
     word-break: break-word;
+    margin-top: 1px;
   }
 
   .qr-box {
@@ -118,18 +127,18 @@
   }
 
   #qrcode canvas, #qrcode img {
-    width: 13mm !important;
-    height: 13mm !important;
+    width: 100px !important;
+    height: 100px !important;
   }
 
   /* ── ROW 4: Footer ── */
   .footer {
-    border-top: 0.4px dashed #bbb;
-    padding-top: 0.3mm;
+    border-top: 1px dashed #bbb;
+    padding-top: 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 4.5pt;
+    font-size: 11px;
   }
 
   .footer-date {
@@ -140,9 +149,9 @@
     background: #000;
     color: #fff;
     font-weight: bold;
-    padding: 0.2mm 0.8mm;
-    letter-spacing: 0.3px;
-    font-size: 4.2pt;
+    padding: 3px 8px;
+    letter-spacing: 0.5px;
+    font-size: 10px;
   }
 
   /* ── SCREEN CONTROLS ── */
@@ -152,10 +161,10 @@
   }
 
   .btn {
-    padding: 8px 18px;
+    padding: 10px 24px;
     border: none;
     border-radius: 5px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     cursor: pointer;
     letter-spacing: 1px;
@@ -167,7 +176,7 @@
   .btn-demo { background: #1f2937; color: #9ca3af; border: 1px solid #374151; }
 
   .info {
-    font-size: 9px;
+    font-size: 10px;
     color: #5a6470;
     text-align: center;
     line-height: 1.6;
@@ -175,30 +184,19 @@
 
   /* ── PRINT STYLES ── */
   @media print {
-    @page { 
-      size: 58mm 30mm; 
-      margin: 0;
-      padding: 0;
-    }
-    html, body {
-      width: 58mm;
-      height: 30mm;
-      margin: 0;
-      padding: 0;
+    body {
       background: white;
-    }
-    body { 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 0;
+      margin: 0;
+      display: block;
     }
     .preview-label, .controls, .info { display: none !important; }
-    .sticker { 
-      border: none; 
-      width: 58mm; 
-      height: 30mm;
+    .sticker {
+      border: none;
+      width: 100%;
       margin: 0;
-      padding: 1mm 1.5mm;
+      padding: 10px 15px;
+      page-break-after: always;
     }
   }
 </style>
@@ -212,7 +210,7 @@
   <!-- Header: Shop name + phone -->
   <div class="header">
     <div class="shop-name">SS PCB REPAIR</div>
-    <div class="shop-phone">Ukkadam | 93856 82073</div>
+    <div class="shop-phone">Ukkadam, Coimbatore | 93856 82073</div>
   </div>
 
   <!-- Job ID Bar -->
@@ -256,7 +254,7 @@
 </div>
 
 <div class="info">
-  Full width 58mm × 30mm thermal sticker<br>
+  Thermal sticker - Full width auto sizing<br>
   Helett H65C compatible
 </div>
 
@@ -290,7 +288,7 @@
   const appURL = 'https://www.appsheet.com/start/JOBS-513246328#view=Inward+Entry&row=' + encodeURIComponent(booking);
   new QRCode(document.getElementById('qrcode'), {
     text: appURL,
-    width: 52, height: 52,
+    width: 100, height: 100,
     colorDark: '#000', colorLight: '#fff',
     correctLevel: QRCode.CorrectLevel.M
   });
