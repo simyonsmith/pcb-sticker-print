@@ -10,7 +10,7 @@
 
   body {
     font-family: 'Courier New', monospace;
-    background: #ffffff;
+    background: #0f1419;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -27,13 +27,13 @@
     text-transform: uppercase;
   }
 
-  /* ── STICKER 58mm x 35mm ── */
+  /* ── STICKER 50mm x 30mm ── */
   .sticker {
-    width: 58mm;
-    height: auto;
+    width: 50mm;
+    height: 30mm;
     background: #fff;
-    border: 2px solid #333;
-    padding: 2mm 2mm;
+    border: 1px dashed #999;
+    padding: 0.8mm 1.2mm;
     font-family: 'Courier New', monospace;
     color: #000;
     display: flex;
@@ -41,32 +41,256 @@
     justify-content: space-between;
   }
 
-  /* ── HEADER ── */
+  /* ── ROW 1: Shop Header ── */
   .header {
-    border-bottom: 1px solid #000;
-    padding-bottom: 1mm;
-    margin-bottom: 1mm;
-    text-align: center;
+    border-bottom: 0.6px solid #000;
+    padding-bottom: 0.4mm;
+    margin-bottom: 0.4mm;
   }
 
   .shop-name {
-    font-size: 10pt;
+    font-size: 7pt;
     font-weight: bold;
-    line-height: 1.2;
+    line-height: 1;
   }
 
   .shop-phone {
-    font-size: 6pt;
-    color: #000;
-    letter-spacing: 0.3px;
+    font-size: 4.5pt;
+    color: #333;
+    letter-spacing: 0.2px;
   }
 
-  /* ── JOB BAR ── */
+  /* ── ROW 2: Job Number (Black bar) ── */
   .job-bar {
     background: #000;
     color: #fff;
-    font-size: 9pt;
+    font-size: 7pt;
     font-weight: bold;
+    padding: 0.3mm 0.8mm;
+    letter-spacing: 0.6px;
+    margin-bottom: 0.4mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* ── ROW 3: Main content (Details + QR) ── */
+  .main-content {
+    display: flex;
+    gap: 0.8mm;
+    flex: 1;
+    margin-bottom: 0.4mm;
+    align-items: center;
+  }
+
+  .details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35mm;
+  }
+
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .dl {
+    font-size: 4.2pt;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+  }
+
+  .dv {
+    font-size: 5.5pt;
+    font-weight: bold;
+    color: #000;
+    word-break: break-word;
+  }
+
+  .qr-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #qrcode canvas, #qrcode img {
+    width: 13mm !important;
+    height: 13mm !important;
+  }
+
+  /* ── ROW 4: Footer ── */
+  .footer {
+    border-top: 0.4px dashed #bbb;
+    padding-top: 0.3mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 4.5pt;
+  }
+
+  .footer-date {
+    color: #555;
+  }
+
+  .status {
+    background: #000;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.2mm 0.8mm;
+    letter-spacing: 0.3px;
+    font-size: 4.2pt;
+  }
+
+  /* ── SCREEN CONTROLS ── */
+  .controls {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .btn-print { background: #10b981; color: #fff; }
+  .btn-print:hover { background: #059669; }
+  .btn-demo { background: #1f2937; color: #9ca3af; border: 1px solid #374151; }
+
+  .info {
+    font-size: 9px;
+    color: #5a6470;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    @page { size: 50mm 30mm; margin: 0; }
+    body { background: white; padding: 0; display: block; }
+    .preview-label, .controls, .info { display: none !important; }
+    .sticker { border: none; width: 50mm; height: 30mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-label">SS PCB Repair — Job Sticker</div>
+
+<div class="sticker">
+
+  <!-- Header: Shop name + phone -->
+  <div class="header">
+    <div class="shop-name">SS PCB REPAIR</div>
+    <div class="shop-phone">Ukkadam | 93856 82073</div>
+  </div>
+
+  <!-- Job ID Bar -->
+  <div class="job-bar">
+    <span>JOB #<span id="s-booking">26062601</span></span>
+    <span id="s-date-time">27-06 09:15</span>
+  </div>
+
+  <!-- Main: Details + QR -->
+  <div class="main-content">
+    <div class="details">
+      <div class="detail-item">
+        <span class="dl">Mechanic</span>
+        <span class="dv" id="s-name">Riyas</span>
+      </div>
+      <div class="detail-item">
+        <span class="dl">Phone</span>
+        <span class="dv" id="s-phone">9876543210</span>
+      </div>
+      <div class="detail-item">
+        <span class="dl">Issue</span>
+        <span class="dv" id="s-problem">No cooling</span>
+      </div>
+    </div>
+    <div class="qr-box">
+      <div id="qrcode"></div>
+    </div>
+  </div>
+
+  <!-- Footer: Date + Status -->
+  <div class="footer">
+    <span class="footer-date">Received</span>
+    <span class="status">ACTIVE</span>
+  </div>
+
+</div>
+
+<div class="controls">
+  <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+  <button class="btn btn-demo" onclick="loadDemo()">🔄 Demo</button>
+</div>
+
+<div class="info">
+  50mm × 30mm thermal sticker with QR code<br>
+  Helett H65C compatible
+</div>
+
+<script>
+  const p = new URLSearchParams(window.location.search);
+
+  const booking = p.get('booking') || '26062601';
+  const name    = p.get('name')    || 'Riyas';
+  const phone   = p.get('phone')   || '9876543210';
+  const problem = p.get('problem') || 'No cooling';
+  const ts      = p.get('ts')      || '';
+
+  // Format date/time
+  let dateTime = '27-06 09:15';
+  if (ts) {
+    const d = new Date(ts);
+    if (!isNaN(d)) {
+      const date = d.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit'});
+      const time = d.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+      dateTime = date + ' ' + time;
+    }
+  }
+
+  document.getElementById('s-booking').textContent = booking;
+  document.getElementById('s-name').textContent    = name;
+  document.getElementById('s-phone').textContent   = phone;
+  document.getElementById('s-problem').textContent = problem;
+  document.getElementById('s-date-time').textContent = dateTime;
+
+  // QR code — AppSheet job link
+  const appURL = 'https://www.appsheet.com/start/JOBS-513246328#view=Inward+Entry&row=' + encodeURIComponent(booking);
+  new QRCode(document.getElementById('qrcode'), {
+    text: appURL,
+    width: 52, height: 52,
+    colorDark: '#000', colorLight: '#fff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  // Demo data
+  const demos = [
+    { booking:'26062601', name:'Riyas',       phone:'9876543210', problem:'No cooling' },
+    { booking:'26062602', name:'Mohammad',    phone:'9988776655', problem:'Fan not working' },
+    { booking:'26062603', name:'Mr Home Fix', phone:'9123456789', problem:'Display error E5' },
+  ];
+  let dIdx = 0;
+  function loadDemo() {
+    dIdx = (dIdx + 1) % demos.length;
+    const d = demos[dIdx];
+    const url = new URL(window.location.href);
+    Object.entries(d).forEach(([k,v]) => url.searchParams.set(k, v));
+    window.location.href = url.toString();
+  }
+</script>
+</body>
+</html>
     padding: 1mm 1.5mm;
     letter-spacing: 0.8px;
     margin-bottom: 1mm;
