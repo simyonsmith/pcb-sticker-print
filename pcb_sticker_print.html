@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SS PCB Repair - Job Sticker</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Courier New', monospace;
+    background: #111827;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .screen-title {
+    color: #9ca3af;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* ── STICKER 50mm x 30mm ── */
+  .sticker {
+    width: 50mm;
+    height: 30mm;
+    background: #fff;
+    border: 1px dashed #999;
+    padding: 1.5mm 2mm;
+    font-family: 'Courier New', monospace;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Row 1 — Shop Header */
+  .shop-header {
+    text-align: center;
+    border-bottom: 0.8px solid #000;
+    padding-bottom: 1mm;
+    margin-bottom: 1mm;
+  }
+  .shop-name {
+    font-size: 8pt;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+  .shop-info {
+    font-size: 5pt;
+    color: #444;
+    letter-spacing: 0.2px;
+  }
+
+  /* Row 2 — Job No bar + QR side by side */
+  .middle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    gap: 1.5mm;
+    margin-bottom: 1mm;
+  }
+
+  .job-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8mm;
+  }
+
+  .job-id-bar {
+    background: #000;
+    color: #fff;
+    font-size: 7.5pt;
+    font-weight: bold;
+    padding: 0.5mm 1.5mm;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .detail-line {
+    display: flex;
+    align-items: baseline;
+    gap: 1mm;
+  }
+  .dl {
+    font-size: 4.8pt;
+    color: #666;
+    text-transform: uppercase;
+    min-width: 9mm;
+  }
+  .dv {
+    font-size: 5.8pt;
+    font-weight: bold;
+    color: #000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 22mm;
+  }
+
+  .qr-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3mm;
+  }
+  #qrcode canvas, #qrcode img {
+    width: 16mm !important;
+    height: 16mm !important;
+    display: block;
+  }
+  .qr-label {
+    font-size: 3.8pt;
+    color: #888;
+    text-align: center;
+  }
+
+  /* Row 3 — Footer */
+  .sticker-footer {
+    border-top: 0.5px dashed #bbb;
+    padding-top: 0.8mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-text {
+    font-size: 4.8pt;
+    color: #555;
+  }
+  .status-pill {
+    background: #000;
+    color: #fff;
+    font-size: 4.5pt;
+    font-weight: bold;
+    padding: 0.3mm 1.2mm;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    padding: 9px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .btn-print { background: #10b981; color: #fff; }
+  .btn-print:hover { background: #059669; }
+  .btn-demo  { background: #1f2937; color: #9ca3af; border: 1px solid #374151; }
+
+  .info {
+    font-size: 10px;
+    color: #4b5563;
+    text-align: center;
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    @page { size: 50mm 30mm; margin: 0; }
+    body { background: white; padding: 0; display: block; }
+    .screen-title, .controls, .info { display: none !important; }
+    .sticker { border: none; width: 50mm; height: 30mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="screen-title">SS PCB Repair — Job Tag Preview</div>
+
+<div class="sticker">
+
+  <!-- Header -->
+  <div class="shop-header">
+    <div class="shop-name">SS PCB REPAIR</div>
+    <div class="shop-info">Ukkadam, Coimbatore &nbsp;|&nbsp; 93856 82073</div>
+  </div>
+
+  <!-- Middle: details + QR -->
+  <div class="middle-row">
+    <div class="job-details">
+      <div class="job-id-bar">JOB# <span id="s-booking">26062601</span></div>
+      <div class="detail-line"><span class="dl">Name</span><span class="dv" id="s-name">Riyas</span></div>
+      <div class="detail-line"><span class="dl">Brand</span><span class="dv" id="s-brand">LG</span></div>
+      <div class="detail-line"><span class="dl">Type</span><span class="dv" id="s-type">Indoor PCB</span></div>
+    </div>
+    <div class="qr-box">
+      <div id="qrcode"></div>
+      <div class="qr-label">Scan job</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="sticker-footer">
+    <span class="footer-text" id="s-date">26-06-2026 21:10</span>
+    <span class="status-pill">RECEIVED</span>
+    <span class="footer-text">By: <span id="s-recvby">SIMIYON</span></span>
+  </div>
+
+</div>
+
+<div class="controls">
+  <button class="btn btn-print" onclick="window.print()">🖨️ Print Sticker</button>
+  <button class="btn btn-demo"  onclick="loadDemo()">🔄 Demo Data</button>
+</div>
+
+<div class="info">
+  Connect Helett H65C via Bluetooth or USB<br>
+  Set paper size to <strong>50mm × 30mm</strong> before printing
+</div>
+
+<script>
+  const p = new URLSearchParams(window.location.search);
+
+  const booking = p.get('booking') || '26062601';
+  const name    = p.get('name')    || 'Riyas';
+  const brand   = p.get('brand')   || 'LG';
+  const type    = p.get('type')    || 'Indoor PCB';
+  const recvby  = p.get('recvby')  || 'SIMIYON';
+  const ts      = p.get('ts')      || '';
+
+  // Format date/time
+  let dateStr = '26-06-2026 21:10';
+  if (ts) {
+    const d = new Date(ts);
+    if (!isNaN(d)) {
+      dateStr = d.toLocaleDateString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric'})
+              + ' ' + d.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+    }
+  }
+
+  document.getElementById('s-booking').textContent = booking;
+  document.getElementById('s-name').textContent    = name;
+  document.getElementById('s-brand').textContent   = brand;
+  document.getElementById('s-type').textContent    = type;
+  document.getElementById('s-recvby').textContent  = recvby;
+  document.getElementById('s-date').textContent    = dateStr;
+
+  // QR code — links to AppSheet job
+  const appURL = 'https://www.appsheet.com/start/JOBS-513246328#view=Inward+Entry&row=' + encodeURIComponent(booking);
+  new QRCode(document.getElementById('qrcode'), {
+    text: appURL,
+    width: 60, height: 60,
+    colorDark: '#000', colorLight: '#fff',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  // Demo cycling
+  const demos = [
+    { booking:'26062601', name:'Riyas',       brand:'LG',      type:'Indoor PCB',  recvby:'SIMIYON' },
+    { booking:'26062602', name:'Mohammad',    brand:'Samsung', type:'Outdoor PCB', recvby:'SHIRA' },
+    { booking:'26062603', name:'Mr Home Fix', brand:'Voltas',  type:'Indoor PCB',  recvby:'ARAVINDHAN' },
+  ];
+  let demoIdx = 0;
+  function loadDemo() {
+    demoIdx = (demoIdx + 1) % demos.length;
+    const d = demos[demoIdx];
+    const url = new URL(window.location.href);
+    Object.entries(d).forEach(([k,v]) => url.searchParams.set(k, v));
+    window.location.href = url.toString();
+  }
+</script>
+</body>
+</html>
