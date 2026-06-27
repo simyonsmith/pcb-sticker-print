@@ -10,7 +10,7 @@
 
   body {
     font-family: 'Courier New', monospace;
-    background: #0f1419;
+    background: #ffffff;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -27,13 +27,13 @@
     text-transform: uppercase;
   }
 
-  /* ── STICKER 50mm x 30mm ── */
+  /* ── STICKER FULL 58mm x 30mm ── */
   .sticker {
-    width: 50mm;
+    width: 58mm;
     height: 30mm;
     background: #fff;
     border: 1px dashed #999;
-    padding: 0.8mm 1.2mm;
+    padding: 1mm 1.5mm;
     font-family: 'Courier New', monospace;
     color: #000;
     display: flex;
@@ -56,7 +56,7 @@
 
   .shop-phone {
     font-size: 4.5pt;
-    color: #333;
+    color: #000;
     letter-spacing: 0.2px;
   }
 
@@ -98,7 +98,7 @@
 
   .dl {
     font-size: 4.2pt;
-    color: #555;
+    color: #000;
     text-transform: uppercase;
     letter-spacing: 0.2px;
   }
@@ -133,7 +133,7 @@
   }
 
   .footer-date {
-    color: #555;
+    color: #000;
   }
 
   .status {
@@ -175,10 +175,31 @@
 
   /* ── PRINT STYLES ── */
   @media print {
-    @page { size: 50mm 30mm; margin: 0; }
-    body { background: white; padding: 0; display: block; }
+    @page { 
+      size: 58mm 30mm; 
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      width: 58mm;
+      height: 30mm;
+      margin: 0;
+      padding: 0;
+      background: white;
+    }
+    body { 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .preview-label, .controls, .info { display: none !important; }
-    .sticker { border: none; width: 50mm; height: 30mm; }
+    .sticker { 
+      border: none; 
+      width: 58mm; 
+      height: 30mm;
+      margin: 0;
+      padding: 1mm 1.5mm;
+    }
   }
 </style>
 </head>
@@ -235,7 +256,7 @@
 </div>
 
 <div class="info">
-  50mm × 30mm thermal sticker with QR code<br>
+  Full width 58mm × 30mm thermal sticker<br>
   Helett H65C compatible
 </div>
 
